@@ -2,8 +2,8 @@ Package: com.idefix2020.autoyoutubedarkmode
 Name: AutoYouTubeDarkMode
 Version: 1.4
 Depends: firmware (>=13.0), mobilesubstrate
-Author: Idefix2020, Capt Inc <teamcaptinc@gmail.com>
-Maintainer: Idefix2020, Capt Inc <teamcaptinc@gmail.com>
+Author: Idefix2020, Capt Inc <Idefix2020dev@gmail.com>
+Maintainer: Idefix2020, Capt Inc <Idefix2020dev@gmail.com>
 Section: Tweaks
 Architecture: iphoneos-arm
 Description: Sync YouTube's built-in dark mode to system dark mode
