@@ -1,8 +1,9 @@
+#import "UIKit/UIKit.h"
+
 @interface NSDistributedNotificationCenter : NSNotificationCenter //detect when DarkModeToggle is toggled
 @end
 
 @interface YTAppViewController : UIViewController
-@property NSString *darkModeRespectsWhat;
 @property UIViewController *childModalViewController;
 - (void)viewDidLoad;
 - (void)dealloc;
@@ -20,10 +21,4 @@
 
 @interface YTPageStyleController : NSObject //this class controls YouTube's built-in dark mode
 @property NSInteger appThemeSetting;
-@end
-
-@interface CANavigationViewController : UINavigationController //Cercube's view controllers for compatibility with CercubeDarkMode
-@end
-
-@interface CAAccountViewController : UIViewController
 @end

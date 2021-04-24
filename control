@@ -1,10 +1,9 @@
-Package: com.captinc.youtubedarkmodesync
-Name: YouTubeDarkModeSync
-Version: 1.3
-Depends: firmware (>=11.0), mobilesubstrate
-Author: Capt Inc <teamcaptinc@gmail.com>
-Maintainer: Capt Inc <teamcaptinc@gmail.com>
+Package: com.idefix2020.autoyoutubedarkmode
+Name: AutoYouTubeDarkMode
+Version: 1.4
+Depends: firmware (>=13.0), mobilesubstrate
+Author: Idefix2020, Capt Inc <teamcaptinc@gmail.com>
+Maintainer: Idefix2020, Capt Inc <teamcaptinc@gmail.com>
 Section: Tweaks
 Architecture: iphoneos-arm
-Description: Toggle YouTube's built-in dark mode with iOS 13's dark mode, DarkModeToggle, and Noctis
-Depiction: https://captinc.github.io/depictions/youtubedarkmodesync/youtubedarkmodesync.html
+Description: Sync YouTube's built-in dark mode to system dark mode

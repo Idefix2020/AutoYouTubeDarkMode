@@ -1,29 +1,10 @@
 #import "Tweak.h"
 
 %hook YTAppViewController
-%property (strong) NSString *darkModeRespectsWhat;
-- (void)viewDidLoad { //determine what "parent" to respect
+
+- (void)viewDidLoad {
     %orig;
-    if (@available(iOS 13, *)) { //if on iOS 13 or newer, respect iOS 13's dark mode
-        self.darkModeRespectsWhat = @"iOS13";
-    }
-    else {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        //if on iOS 12 or older and DarkModeToggle is installed, respect DarkModeToggle
-        if ([fileManager fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/DarkModeToggleSB.dylib"]) {
-            self.darkModeRespectsWhat = @"DarkModeToggle";
-            [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(startYouTubeDarkModeSync) name:@"com.captinc.darkmodetoggle.stateChanged" object:nil];
-        }
-        //but if DarkModeToggle is not installed and Noctis12 is, respect Noctis12
-        else if ([fileManager fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/Noctis12.dylib"]) {
-            self.darkModeRespectsWhat = @"Noctis12";
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startYouTubeDarkModeSync) name:@"com.laughingquoll.noctis.darkModeChanged" object:nil];
-        }
-        else {
-            self.darkModeRespectsWhat = @"None";
-        }
-    }
-    [self startYouTubeDarkModeSync]; //ensure the appearance is synced even if dark mode was toggled when YouTube wasn't open
+    [self startYouTubeDarkModeSync];
 }
 
 - (void)dealloc {
@@ -31,58 +12,21 @@
     [[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
     %orig;
 }
+
 %new
 - (void)startYouTubeDarkModeSync { //match YouTube's appearance to the current state of what "parent" to respect
-    if (@available(iOS 13, *)) {
-        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            [self changeToDarkOrLightMode:3];
-        }
-        else if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-            [self changeToDarkOrLightMode:2];
-        }
-    }
-    else {
-        if ([self.darkModeRespectsWhat isEqualToString:@"DarkModeToggle"]) {
-            NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.captinc.darkmodetoggle.plist"];
-            NSString *state = [prefs objectForKey:@"darkModeState"];
-            if (!state) {
-                state = @"light";
-            }
-
-            if ([state isEqualToString:@"dark"]) {
-                [self changeToDarkOrLightMode:3];
-            }
-            else if ([state isEqualToString:@"light"]) {
-                [self changeToDarkOrLightMode:2];
-            }
-        }
-        else if ([self.darkModeRespectsWhat isEqualToString:@"Noctis12"]) {
-            NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.laughingquoll.noctis12prefs.settings.plist"];
-            BOOL state = [(NSNumber *)[prefs objectForKey:@"enabled"] boolValue];
-
-            if (state) {
-                [self changeToDarkOrLightMode:3];
-            }
-            else {
-                [self changeToDarkOrLightMode:2];
-            }
-        }
-    }
+	if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+		[self changeToDarkOrLightMode:3];
+	}
+	else if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
+		[self changeToDarkOrLightMode:2];
+	}
 }
+
 %new
 - (void)changeToDarkOrLightMode:(NSInteger)newMode {
     YTPageStyleController *darkModeController = MSHookIvar<YTPageStyleController *>(self, "_pageStyleController"); //YTPageStyleController is an ivar of YTAppViewController, not an @property
     darkModeController.appThemeSetting = newMode; //pass 2 to change to YouTube's built-in light mode. pass 3 to change to dark mode
-    
-    //compatibility with CercubeDarkMode
-    CAAccountViewController *rootCercubeVC;
-    if ([self.childModalViewController isKindOfClass:%c(CANavigationViewController)]) {
-        CANavigationViewController *nav = (CANavigationViewController *)self.childModalViewController;
-        rootCercubeVC = (CAAccountViewController *)[nav.viewControllers firstObject];
-    }
-    if (rootCercubeVC) { //nil check to prevent crashes
-        [rootCercubeVC dismissViewControllerAnimated:YES completion:nil]; //must dismiss the root Cercube VC in order to make Cercube update its appearance
-    }
 }
 %end
 

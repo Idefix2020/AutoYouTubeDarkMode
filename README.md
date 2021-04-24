@@ -1,3 +1,11 @@
+# AutoYouTubeDarkMode
+
+Changed the origial tweak to simplify and remove unnecessary parts. All credit belongs to Capt Inc.
+
+Only compatible with iOS 13.0+
+
+# Original README:
+
 # YouTubeDarkModeSync v1.3
 Toggle YouTube's built-in dark mode with iOS 13's dark mode, DarkModeToggle, and Noctis
 

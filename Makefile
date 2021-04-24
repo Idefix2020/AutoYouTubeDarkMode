@@ -1,10 +1,18 @@
+TARGET := iphone:clang:latest:13.0
+INSTALL_TARGET_PROCESSES = YouTube
+
+THEOS_DEVICE_IP = 192.168.10.86
+
+FINALPACKAGE=1
+DEBUG=0
+
 ARCHS = arm64 arm64e
-TARGET = iphone:clang::11.0
+
 include $(THEOS)/makefiles/common.mk
 
-TWEAK_NAME = YouTubeDarkModeSync
-YouTubeDarkModeSync_FILES = Tweak.xm
-YouTubeDarkModeSync_CFLAGS = -fobjc-arc
-YouTubeDarkModeSync_FRAMEWORKS = UIKit
+TWEAK_NAME = AutoYouTubeDarkMode
+AutoYouTubeDarkMode_FILES = Tweak.xm
+AutoYouTubeDarkMode_CFLAGS = -fobjc-arc
+AutoYouTubeDarkMode_FRAMEWORKS = UIKit
 
 include $(THEOS_MAKE_PATH)/tweak.mk
