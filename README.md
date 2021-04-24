@@ -1,6 +1,6 @@
 # AutoYouTubeDarkMode
 
-Changed the origial tweak to simplify and remove unnecessary parts. All credit belongs to Capt Inc.
+Changed the origial tweak to simplify and remove parts I don't need. All credit belongs to Capt Inc.
 
 Only compatible with iOS 13.0+
 
